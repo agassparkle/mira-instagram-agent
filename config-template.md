@@ -9,6 +9,7 @@ edit it by hand, but you can. She reads it before every session.
 
 ```
 AGENT_NAME: Mira   # rename your agent anytime — just say "call yourself [name]"
+AGENT_PERSONA_SOURCE: none   # set automatically if you adopt an existing profile's persona; "reset persona" to undo
 YOUR_NAME: [Your name]
 YOUR_HANDLE: @[yourhandle]
 YOUR_NICHE: [One sentence — what the account is about]
