@@ -8,6 +8,7 @@ edit it by hand, but you can. She reads it before every session.
 ## Identity
 
 ```
+AGENT_NAME: Mira   # rename your agent anytime — just say "call yourself [name]"
 YOUR_NAME: [Your name]
 YOUR_HANDLE: @[yourhandle]
 YOUR_NICHE: [One sentence — what the account is about]

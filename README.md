@@ -6,7 +6,8 @@ intelligence, performance tracking, and a feedback loop that makes her smarter
 the longer you use her.
 
 The name is a star — and in Spanish, *mira* means **"look!"**, which is what
-every Instagram post is trying to make someone do.
+every Instagram post is trying to make someone do. (Don't like it? Rename your
+agent during onboarding or anytime after — Mira is just the default persona.)
 
 Runs on any agent harness that can load a markdown skill and call HTTP APIs
 (OpenClaw, Hermes Agent, Claude Code, and similar). Built on the **official

@@ -8,6 +8,7 @@ onboarding.
 ## Identity
 
 ```
+AGENT_NAME: Mira
 YOUR_NAME: Maya
 YOUR_HANDLE: @maya.builds
 YOUR_NICHE: AI tools and automation for solo founders, shown through real builds
