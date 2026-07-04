@@ -1,0 +1,13 @@
+# Personal data — never ships
+config.md
+.env
+.env.*
+.longlived
+
+# Mira's memory stays local
+memory/*
+!memory/.gitkeep
+
+# OS noise
+.DS_Store
+Thumbs.db
