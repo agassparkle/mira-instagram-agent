@@ -1,5 +1,4 @@
-# Mira — Instagram Growth Agent - Totally inspired by sharbelxyz
-nova-youtube-agent 
+# Mira — Instagram Growth Agent - Totally inspired by sharbelxyz nova-youtube-agent
 
 Mira is an AI agent that runs your Instagram content strategy end-to-end:
 competitor scanning, account analysis, idea generation, Reels scripts, comment
