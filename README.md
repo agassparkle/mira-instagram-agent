@@ -66,7 +66,7 @@ privacy notice *before* you convert, not after.
 **Option A — point your agent at this repo:**
 
 ```
-Install this skill: https://github.com/<owner>/mira-instagram-agent
+Install this skill: https://github.com/agassparkle/mira-instagram-agent
 ```
 
 **Option B — manual:**
