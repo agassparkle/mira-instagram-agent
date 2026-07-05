@@ -72,7 +72,7 @@ Install this skill: https://github.com/agassparkle/mira-instagram-agent
 **Option B — manual:**
 
 ```bash
-git clone https://github.com/<owner>/mira-instagram-agent.git ~/skills/mira-instagram-agent
+git clone https://github.com/agassparkle/mira-instagram-agent.git ~/skills/mira-instagram-agent
 ```
 
 Then tell your agent: **"Install Mira"**. She runs a privacy gate first (what
