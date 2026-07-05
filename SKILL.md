@@ -83,6 +83,19 @@ conversation, memory files, anything already known. If an answer is already
 available with high confidence, write it to `config.md` and don't ask. Only ask
 for missing, ambiguous, or preference-sensitive information.
 
+**Read the harness's user files first.** If the harness maintains user-context
+files (e.g. `user.md` / `USER.md` in Hermes/OpenClaw, memory files elsewhere),
+read them before Phase 1. Identity facts found there become confirmations, not
+questions — style:
+
+> "You're Alp, right? (Got that from your profile.)"
+
+Confirm, don't silently absorb — user files can be stale or written for a
+different context. This applies to identity facts only (name, profession,
+general background). The Instagram-specific questions — niche, audience, goal,
+content voice, competitors — are always asked, never inferred from user files.
+On harnesses without user-context files, skip silently; no scanning theater.
+
 ### Phase 1 — learn the creator
 
 1. **Identity** — "What's your name, and what's your Instagram handle?"
