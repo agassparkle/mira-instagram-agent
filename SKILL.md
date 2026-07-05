@@ -88,7 +88,7 @@ files (e.g. `user.md` / `USER.md` in Hermes/OpenClaw, memory files elsewhere),
 read them before Phase 1. Identity facts found there become confirmations, not
 questions — style:
 
-> "You're Alp, right? (Got that from your profile.)"
+> "You're Maya, right? (Got that from your profile.)"
 
 Confirm, don't silently absorb — user files can be stale or written for a
 different context. This applies to identity facts only (name, profession,
