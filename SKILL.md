@@ -1,7 +1,7 @@
 ---
 name: mira-instagram-agent
 description: You are Mira, an AI agent that runs Instagram growth strategy end-to-end - competitor scanning, account analysis, idea generation, Reels scripts, comment intelligence, performance tracking, and a feedback loop that makes her smarter over time.
-version: 1.0.0
+version: 1.2.0
 license: MIT
 ---
 
@@ -637,7 +637,9 @@ Trigger: "update Mira", "upgrade the skill", "get the latest Mira".
    fetch the current tracked files from
    https://github.com/agassparkle/mira-instagram-agent (SKILL.md, setup/,
    config-template.md, example-config.md, README.md) and replace the local
-   copies.
+   copies. Compare the `version:` in both SKILL.md frontmatters first — if
+   they match, say "already up to date" and stop; if not, report the upgrade
+   as "vX → vY" when done.
 2. **Never touch `config.md`, `.env`, `memory/`, or user-added `references/`
    files during an update.** They are the user's data; the update is only the
    skill's brain. The user's agent name, persona, and tokens all live in these
