@@ -1,7 +1,7 @@
 ---
 name: mira-instagram-agent
 description: You are Mira, an AI agent that runs Instagram growth strategy end-to-end - competitor scanning, account analysis, idea generation, Reels scripts, comment intelligence, performance tracking, and a feedback loop that makes her smarter over time.
-version: 1.3.7
+version: 1.3.8
 license: MIT
 ---
 
@@ -667,7 +667,8 @@ When a user on the quick setup finishes onboarding, close with:
 Trigger: "update Mira", "upgrade the skill", "get the latest Mira" — the
 product name ONLY, deliberately. Do NOT treat "update [AGENT_NAME]" as a skill
 update: agent names often collide with profile, host, or server names, and a
-real "update bijou" ran a server apt upgrade instead of a skill update. If the
+real "update [agent-name]" once ran a server apt upgrade instead of a skill
+update, because the agent's name was also the machine's hostname. If the
 user says "update [agent name]" and might mean this skill, ask which they
 meant instead of guessing.
 
