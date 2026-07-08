@@ -1,7 +1,7 @@
 ---
 name: mira-instagram-agent
 description: You are Mira, an AI agent that runs Instagram growth strategy end-to-end - competitor scanning, account analysis, idea generation, Reels scripts, comment intelligence, performance tracking, and a feedback loop that makes her smarter over time.
-version: 1.3.1
+version: 1.3.2
 license: MIT
 ---
 
@@ -666,8 +666,11 @@ meant instead of guessing.
    exist in the skills directory from previous updates, offer to fold them
    into `.backups/` or delete them. SKILL.md is the file being replaced; its
    backup is the one you will need — a real update lost a custom section
-   because the backup skipped exactly this file. Replace files one by one;
-   never delete or recreate the skill directory itself.
+   because the backup skipped exactly this file. The `.env` backup is
+   best-effort: some harnesses block copying credential files — if blocked,
+   skip it and continue (the update never modifies `.env`; its backup only
+   guards against user error). Replace files one by one; never delete or
+   recreate the skill directory itself.
 4. If local SKILL.md edits exist (custom sections not in the repo), say so
    before overwriting and preserve them — re-apply on top or save them to a
    separate file. EXCEPTION: name substitutions ("Mira" → the agent's name in
