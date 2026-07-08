@@ -270,3 +270,21 @@ Mobile-only (no URL — prose + "pick up your phone"):
   (new app ID = old tokens permanently orphaned). Partial mitigations:
   re-consent with narrowed toggles (old tokens inherit the CURRENT grant) and
   the ~60-day expiry. The real defense is never leaking tokens: G11 + G18.
+- **G20 — .env appends glue onto the last line.** If `.env` lacks a trailing
+  newline, appending a new `KEY=value` produces `OLDVALUEKEY=value` on one
+  line. Symptoms are misleading: "Invalid OAuth access token" / "Malformed
+  access token" / "(#200) Provide valid app ID" — nothing points at the file.
+  Hit twice in live use. Verify the file ends with a newline before appending;
+  after any append, sanity-check keys and value lengths (never print values).
+- **G21 — token permanence (verified live 2026-07-08).** Instagram-Login
+  tokens self-refresh via
+  `graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token={current}`
+  → fresh 60-day token, agent-driven; the quick tier needs no human token
+  maintenance, ever. Facebook flavor: the Page token derived via
+  `/{page-id}?fields=access_token` from a long-lived user token has **no hard
+  expiry** (debug_token expires_at = 0) and serves insights, Business
+  Discovery, AND comments — all three verified live. Remaining clock:
+  `data_access_expires_at` (~90 days) → quarterly re-auth (new user token →
+  re-derive Page token). Zero-clock permanence exists only via Business
+  Manager system-user tokens (requires a business portfolio; optional
+  advanced path).
