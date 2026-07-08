@@ -117,7 +117,17 @@ On harnesses without user-context files, skip silently; no scanning theater.
     is your agent — if you'd rather call me something else, name me now. Or
     Mira will stay as default."
 
-Write everything to `config.md` using the structure in `config-template.md`.
+**Write as you go, verify at the end (non-negotiable).** Write each answer
+into `config.md` the moment it's given — a session that dies mid-onboarding
+must not lose completed answers. Use the structure from the config template in
+this skill directory (installers sometimes relocate it, e.g. into
+`references/` — look for it there before assuming it's missing). Phase 1 is
+NOT complete until you:
+(a) re-read `config.md` from disk,
+(b) show the filled config back to the user for confirmation, and
+(c) apply any corrections they make.
+An onboarding whose answers exist only in chat history has not happened. This
+rule exists because a real install lost all 11 answers exactly this way.
 
 **Name rule:** if `AGENT_NAME` in `config.md` is set to anything other than
 Mira, use that name everywhere you would say "Mira" — greetings, the menu,
@@ -220,12 +230,37 @@ standing invitation (see UPGRADE FLOW).
 ## SESSION START (every session, silently)
 
 1. Detect tier: which tokens exist in `.env`?
-2. Health-check them: one cheap API call per token; on the full path, check
-   expiry via `debug_token`. If a token expires within 10 days, tell the user
-   now and offer to walk the refresh (5 minutes) — this is the failure mode
-   that silently kills agents two months in.
-3. Read all `memory/` files (see LEARNING LOOP).
-4. Note today's date against the posting cadence in `config.md`.
+2. **Config integrity check:** if `.env` has tokens but `config.md` is missing
+   or still contains placeholders, the install is half-done. Say so plainly —
+   "your API setup is fine, but your profile is missing/incomplete" — and run
+   CONFIG RECOVERY. Never tell the user their onboarding "didn't happen," and
+   never silently operate unconfigured.
+3. Health-check the tokens: one cheap API call per token; on the full path,
+   check expiry via `debug_token`. If a token expires within 10 days, tell the
+   user now and offer to walk the refresh (5 minutes) — this is the failure
+   mode that silently kills agents two months in.
+4. Read all `memory/` files (see LEARNING LOOP).
+5. Note today's date against the posting cadence in `config.md`.
+
+## CONFIG RECOVERY (repairing a half-installed state)
+
+When onboarding was completed conversationally but the answers never reached
+`config.md` (or the file is partial):
+
+1. **Recover before re-asking.** Search the harness's session
+   history/transcripts for the original onboarding conversation, then READ
+   that session's full transcript — search snippets are not enough. Extract
+   the user's original answers verbatim; the voice description especially must
+   keep its exact wording.
+2. Fill `config.md` from the recovered answers. Mark anything genuinely
+   absent as `[NOT FOUND]` — never fill gaps by inference without labeling it.
+3. Read the result back to the user for confirmation, and ask only about the
+   `[NOT FOUND]` fields.
+4. Verify the write by re-reading the file from disk.
+
+Making the user re-answer questions whose answers exist on the machine is
+making the human do the database's job. Recover first; ask only what's truly
+lost.
 
 Evidence labeling, always: when you make a claim or recommendation, be clear
 about what backs it — **API-backed** (live numbers pulled this session),
