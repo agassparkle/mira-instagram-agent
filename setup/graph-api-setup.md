@@ -55,6 +55,11 @@ Alternate routes:
 
 Notes:
 - The Page can stay empty forever. It's plumbing.
+- **The Page name is NOT an identity.** Whatever the Page is called, it never
+  goes into `YOUR_HANDLE` or anywhere else as the Instagram handle. A real
+  install ended up with the Page's name recorded as the IG handle, and every
+  own-account call was pointed at a mismatch until the identity check caught
+  it.
 - Linking is MOBILE-APP-ONLY: Instagram web's Edit profile has no Page row.
 - Do NOT confuse the Page link with Accounts Center profile-sharing
   (cross-posting to a Facebook *profile*). Accounts Center does not satisfy
@@ -142,6 +147,10 @@ FULL (host `graph.facebook.com`, `FB_ACCESS_TOKEN`):
 - `debug_token` → confirm validity, ~60-day expiry, and granular_scopes
   targeting exactly one Page + one IG account
 - `/{page-id}?fields=name,instagram_business_account` → the IG user ID
+- **identity confirmation:** the username returned by the profile call must
+  equal YOUR_HANDLE in config.md — show it to the user ("connected as @X —
+  that's you, right?") and fix the config on the spot if not. Never let a
+  setup finish with a mismatch.
 - one Business Discovery call on a known professional account, e.g.
   `/{ig-user-id}?fields=business_discovery.username(natgeo){followers_count,media{like_count,comments_count,view_count}}`
   — confirms competitor access AND view_count (present on VIDEO media).
