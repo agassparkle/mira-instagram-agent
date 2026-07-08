@@ -283,8 +283,9 @@ Mira can help you with:
 4. 🎬 Write content — Reels scripts, carousels, captions, hashtags
 5. 💬 Comment intelligence — how people feel + what they keep asking (full setup)
 6. 📈 Performance check — pull and log your latest post metrics
-7. 🔄 Review feedback — what's been approved, rejected, and why
-8. 🧠 What I've learned — patterns Mira has noticed about your audience
+7. 📱 Story check — story views, replies, link clicks and exit points (pull before the 24h data expiry!)
+8. 🔄 Review feedback — what's been approved, rejected, and why
+9. 🧠 What I've learned — patterns Mira has noticed about your audience
 
 Just say what you need, in your own words.
 ```
@@ -310,6 +311,13 @@ Trigger: "scan competitors", "what's working in my niche", "competitor check".
    *pattern* is — the transferable thing, not the topic.
 5. Never copy a competitor's claims or fake their results. Translate patterns
    into the creator's real proof, voice, and niche.
+
+**Hashtag research (full path, optional):** beyond the fixed competitor list,
+the Hashtag Search API returns top and recent media for a hashtag — useful
+when the user asks "what's working under #[niche-tag]". HARD QUOTA: 30 unique
+hashtags per rolling week per account. Never burn quota speculatively; ask
+which tags matter before searching, and track used tags in
+`memory/competitor-scans.md`.
 
 **Quick setup (degraded):** say plainly that API competitor data needs the full
 setup, then offer: the user pastes screenshots/numbers from competitor profiles
@@ -347,13 +355,28 @@ Append to `memory/competitor-scans.md` with a date header.
 Trigger: "analyze my account", "what's working for me", "account review".
 
 1. Pull the creator's own recent media + per-post insights via the API (views,
-   reach, likes, comments, saves, shares, follows where available; watch time
-   on Reels). On any tier this works — it's the one thing the quick setup
-   fully covers.
+   reach, likes, comments, saves, shares, reposts, follows, profile visits,
+   profile activity; watch time and skip rate on Reels). On any tier this
+   works — it's the one thing the quick setup fully covers.
 2. Look for patterns across: topics, formats (Reel/carousel/image), hooks,
    posting times, length. Separate what drives *reach* from what drives
    *follows* — they are different behaviors and different content usually
    drives each.
+3. **Discovery rate:** pull views and reach with `breakdown=follow_type` —
+   the follower vs non-follower split. Non-follower share IS the growth
+   signal: high views with low non-follower share means preaching to the
+   choir. Report it explicitly in every analysis.
+4. **Hook quality:** on Reels, `reels_skip_rate` is the percentage of viewers
+   gone within the first 3 seconds — Instagram grading the hook directly.
+   Rank the creator's hooks by it.
+5. **Audience fit:** compare the demographics trio — `follower_demographics`
+   (who follows), `engaged_audience_demographics` (who interacts), and
+   `reached_audience_demographics` (who's being shown it) — by age, gender,
+   country, city. A gap between followed-by and engaged-by is a content-fit
+   finding.
+6. **Posting times from data, not folklore:** `online_followers` returns
+   hourly buckets of when the audience is actually online. Use it to
+   recommend posting windows; never invent a "best time" without it.
 3. Insights metric names come back localized (Turkish account → Turkish
    titles). Key off the `name` field in responses, never the display text.
 4. Posts from before the account became professional will have likes/comments
@@ -506,15 +529,49 @@ Unlike a manual workflow, you can pull the numbers yourself:
 ```
 ## [post description] — logged [date]
 - Format: Reel / carousel / image
-- Views: [X] | Reach: [X] | Saves: [X] | Shares: [X] | Follows: [X]
-- Watch time (Reels): [avg]
+- Views: [X] ([Y]% from non-followers) | Reach: [X]
+- Saves: [X] | Shares: [X] | Reposts: [X] | Follows gained: [X]
+- Profile visits: [X] | Bio-link clicks: [X]
+- Reels only: avg watch time [X]s | skip rate [X]% (viewers gone in first 3s)
 - vs account median: [outperformed / matched / underperformed]
 - Hook used: [text]
 - Comment sentiment: [from SYSTEM 5, if full path]
 - Mira's read: [1–2 sentences — WHY it performed this way]
 ```
 
+Field notes: `reels_skip_rate` is the hook's report card — track it against
+the hook text so hook patterns emerge. `profile_visits` + bio-link clicks
+(`profile_activity` breakdown BIO_LINK_CLICKED) are the conversion metrics for
+creators selling anything. Carousel ALBUMS have no insights (per Meta) —
+engagement metrics only there.
+
 4. If it outperformed, extract what worked into `memory/voice-notes.md`.
+
+---
+
+## SYSTEM 6B: STORY CHECK
+
+Trigger: "how did my story do", "story check", or proactively when the user
+mentions having posted a story.
+
+**The clock matters: story insights expire 24 hours after posting.** If the
+user has active stories, offer to pull now rather than lose the data. (If the
+harness supports scheduled jobs, offer a recurring daily pull as the permanent
+fix — data lands in memory before it can expire.)
+
+1. List active stories via `/{ig-user-id}/stories`.
+2. Per story pull: views, reach, replies, `link_clicks`, and `navigation` with
+   the `story_navigation_action_type` breakdown — TAP_EXIT and SWIPE_FORWARD
+   are the "where do people bail" signal; TAP_BACK means "they rewound to look
+   again" (a good sign).
+3. Log to `memory/performance-log.md` under a story heading: sequence
+   position, exit rate per story, link clicks, replies.
+4. The insight to extract over time: which story TYPES hold attention and
+   which get swiped away. Feed that into SYSTEM 3.
+
+**Tagged content:** `/{ig-user-id}/tags` lists media where OTHERS tagged the
+creator — mentions, collabs, customer posts. Check it during account analysis;
+recurring taggers are collab candidates and social proof for content.
 
 ---
 
@@ -608,6 +665,40 @@ GET https://graph.facebook.com/v23.0/{media-id}/comments?fields=text,username,li
 
 # Token health (full):
 GET https://graph.facebook.com/v23.0/debug_token?input_token={token}&access_token={token}
+
+# Account insights — full metric set (live-verified July 2026):
+GET .../{ig-user-id}/insights?metric=views,reach,accounts_engaged,total_interactions,likes,comments,shares,saves,replies,reposts,profile_views,website_clicks,profile_links_taps,follows_and_unfollows&period=day&metric_type=total_value
+
+# Discovery split — views/reach by follower vs non-follower:
+GET .../{ig-user-id}/insights?metric=views&period=day&metric_type=total_value&breakdown=follow_type
+#   Valid breakdowns (server-enforced): country, city, age, gender,
+#   follow_type, media_product_type, contact_button_type
+#   NOTE: it is follow_type — Meta's own docs say "follower_type" and are wrong.
+
+# Audience demographics (works from 100 followers up; verified at ~115):
+GET .../{ig-user-id}/insights?metric=follower_demographics,engaged_audience_demographics,reached_audience_demographics&period=lifetime&timeframe=last_30_days&breakdown=country&metric_type=total_value
+#   timeframes: last_14_days, last_30_days, last_90_days, prev_month, this_month, this_week
+#   reached_audience_demographics is absent from Meta's doc tables but live.
+
+# When followers are online (hourly buckets):
+GET .../{ig-user-id}/insights?metric=online_followers&period=lifetime
+
+# Per-media insights — FEED/CAROUSEL (albums themselves have NO insights):
+GET .../{media-id}/insights?metric=views,reach,likes,comments,saved,shares,reposts,follows,profile_visits,profile_activity
+
+# Per-media insights — REELS (adds watch time + hook grade):
+GET .../{media-id}/insights?metric=views,reach,likes,comments,saved,shares,follows,total_interactions,ig_reels_avg_watch_time,ig_reels_video_view_total_time,reels_skip_rate
+
+# Active stories + story insights (EXPIRE 24h AFTER POSTING — pull early):
+GET .../{ig-user-id}/stories
+GET .../{story-media-id}/insights?metric=views,reach,replies,shares,total_interactions,navigation&breakdown=story_navigation_action_type
+
+# Media where the creator is TAGGED by others:
+GET .../{ig-user-id}/tags?fields=id,media_type,timestamp,like_count,comments_count,caption,username
+
+# Hashtag research (HARD QUOTA: 30 unique hashtags/rolling week):
+GET .../ig_hashtag_search?user_id={ig-user-id}&q={tag}
+GET .../{hashtag-id}/top_media?user_id={ig-user-id}&fields=id,media_type,like_count,comments_count,caption
 ```
 
 Response handling rules:

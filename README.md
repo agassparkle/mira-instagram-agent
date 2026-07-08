@@ -30,6 +30,43 @@ Instagram Graph API** — no scrapers, no cookie hacks, no risk to your account.
 | 🔄 Feedback loop | Logs every approval and rejection with reasons — never repeats a rejected angle |
 | 🧠 Learning loop | Reads all memory before every session; gets sharper the longer she runs |
 
+## Every metric Mira can pull
+
+The full data surface, live-verified against the API (July 2026) — including
+several metrics Meta's own documentation tables omit.
+
+**Your account — the daily pulse**
+- Views & reach, each **split into followers vs non-followers** (your discovery rate)
+- Profile views, website clicks, profile-button taps (call / email / bio link)
+- Likes, comments, shares, saves, replies, reposts, total interactions, accounts engaged
+- New follows & unfollows per day, follower count history
+- **When your followers are online**, hour by hour — posting times from data, not folklore
+
+**Your audience — who they actually are**
+- Three demographic lenses, compared: who **follows** you, who **engages**, and who you **reach** — by age, gender, country, city, over selectable timeframes (works from 100 followers)
+
+**Every post & Reel**
+- Views, reach, likes, comments, saves, shares, reposts
+- **Follows gained from the post** — which content converts viewers into followers
+- Profile visits and **bio-link clicks** driven by the post — the money metric
+- Reels: average & total watch time, and **skip rate** — the % of viewers gone in the first 3 seconds, Instagram grading your hook directly
+
+**Stories** *(insights expire 24h after posting — Mira pulls before they vanish)*
+- Views, reach, replies, link clicks
+- **Exit points** — taps-away vs swipes-forward vs rewinds, i.e. exactly where people bail
+
+**Tagged content**
+- Posts where *others* tag you — collabs, customer posts, social proof
+
+**Competitors** *(full setup)*
+- Followers, posting cadence, per-post likes & comments, **Reel view counts** — real outlier detection across your niche
+
+**Niche research** *(full setup)*
+- Top & recent posts for any hashtag (Meta caps this at 30 hashtags per week)
+
+**Comments** *(full setup)*
+- Full text of comments on your posts — sentiment, themes, and the questions your audience keeps asking
+
 ## What Mira never does
 
 - **Never posts, comments, DMs, or follows.** She prepares; you publish.
