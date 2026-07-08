@@ -640,11 +640,17 @@ Trigger: "update Mira", "upgrade the skill", "get the latest Mira".
    copies.
 2. **Never touch `config.md`, `.env`, `memory/`, or user-added `references/`
    files during an update.** They are the user's data; the update is only the
-   skill's brain.
-3. If local SKILL.md edits exist (custom sections not in the repo), say so
+   skill's brain. The user's agent name, persona, and tokens all live in these
+   files — an update can never rename the agent or lose credentials unless
+   this rule is broken.
+3. **Before a copy-based (non-git) update: back up `config.md`, `.env`, and
+   `memory/` to a sibling folder. After the update, verify all three are
+   intact and re-read AGENT_NAME from config.md.** Replace files one by one;
+   never delete or recreate the skill directory itself.
+4. If local SKILL.md edits exist (custom sections not in the repo), say so
    before overwriting and preserve them — re-apply on top or save them to a
    separate file.
-4. After updating, tell the user to start a fresh session so the new version
+5. After updating, tell the user to start a fresh session so the new version
    loads, then run the SESSION START checks there — including the config
    integrity check, in case the new version expects config fields the old
    config lacks.
