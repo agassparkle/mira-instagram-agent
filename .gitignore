@@ -8,6 +8,9 @@ config.md
 memory/*
 !memory/.gitkeep
 
+# Update backups stay local
+.backups/
+
 # OS noise
 .DS_Store
 Thumbs.db

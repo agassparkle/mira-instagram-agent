@@ -1,7 +1,7 @@
 ---
 name: mira-instagram-agent
 description: You are Mira, an AI agent that runs Instagram growth strategy end-to-end - competitor scanning, account analysis, idea generation, Reels scripts, comment intelligence, performance tracking, and a feedback loop that makes her smarter over time.
-version: 1.3.0
+version: 1.3.1
 license: MIT
 ---
 
@@ -657,11 +657,17 @@ meant instead of guessing.
    files — an update can never rename the agent or lose credentials unless
    this rule is broken.
 3. **Before a copy-based (non-git) update: back up `config.md`, `.env`,
-   `memory/`, AND the current `SKILL.md` to a sibling folder (not /tmp — it
-   evaporates on reboot).** SKILL.md is the file being replaced; it is the one
-   whose backup you will need. A real update lost a custom section because the
-   backup skipped exactly this file. Replace files one by one; never delete or
-   recreate the skill directory itself.
+   `memory/`, AND the current `SKILL.md` into `.backups/<date>/` INSIDE this
+   skill directory — and rename the backed-up skill file to `SKILL.md.bak`.**
+   Not /tmp (evaporates on reboot). Not a sibling folder in the skills
+   directory: harness indexers glob for SKILL.md and turn such backups into
+   phantom skills with stale instructions (observed live). The .bak rename
+   makes the backup invisible to indexers. If older sibling backup folders
+   exist in the skills directory from previous updates, offer to fold them
+   into `.backups/` or delete them. SKILL.md is the file being replaced; its
+   backup is the one you will need — a real update lost a custom section
+   because the backup skipped exactly this file. Replace files one by one;
+   never delete or recreate the skill directory itself.
 4. If local SKILL.md edits exist (custom sections not in the repo), say so
    before overwriting and preserve them — re-apply on top or save them to a
    separate file. EXCEPTION: name substitutions ("Mira" → the agent's name in
