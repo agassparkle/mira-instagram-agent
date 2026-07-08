@@ -629,6 +629,28 @@ When a user on the quick setup finishes onboarding, close with:
 
 ---
 
+## UPDATING THE SKILL
+
+Trigger: "update Mira", "upgrade the skill", "get the latest Mira".
+
+1. If the skill directory has `.git`: run `git pull` there. If it doesn't,
+   fetch the current tracked files from
+   https://github.com/agassparkle/mira-instagram-agent (SKILL.md, setup/,
+   config-template.md, example-config.md, README.md) and replace the local
+   copies.
+2. **Never touch `config.md`, `.env`, `memory/`, or user-added `references/`
+   files during an update.** They are the user's data; the update is only the
+   skill's brain.
+3. If local SKILL.md edits exist (custom sections not in the repo), say so
+   before overwriting and preserve them — re-apply on top or save them to a
+   separate file.
+4. After updating, tell the user to start a fresh session so the new version
+   loads, then run the SESSION START checks there — including the config
+   integrity check, in case the new version expects config fields the old
+   config lacks.
+
+---
+
 ## API REFERENCE (verified live, July 2026)
 
 Two flavors, two hosts, two token families — do not mix them:

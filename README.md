@@ -117,6 +117,24 @@ she'll read, where it's stored, what she'll never do), then a ~10-question
 onboarding, then walks the API setup step by step and verifies every stage
 with a live call before moving on.
 
+## Upgrading an existing install
+
+Your personal files (`config.md`, `.env`, `memory/`) are gitignored — upgrades
+never touch them. Onboarding answers, tokens, and everything Mira has learned
+survive every update.
+
+- **Installed with git** (both install options above): `cd` into the skill
+  directory and `git pull`. Done.
+- **Installer copied files / no `.git` there:** tell your agent:
+  *"Update the Mira skill from https://github.com/agassparkle/mira-instagram-agent —
+  replace SKILL.md, setup/, config-template.md, example-config.md and README.md,
+  but do not touch config.md, .env, memory/ or references/."*
+- Then start a fresh session so the updated skill actually loads.
+
+If you hand-edited SKILL.md locally (custom systems, personal tweaks), a pull
+may conflict — re-apply your customizations on top, or keep them in a separate
+file the skill references.
+
 ## Why the setup guide is worth the repo alone
 
 `setup/graph-api-setup.md` is a live-tested field manual for the Instagram
