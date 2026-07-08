@@ -1,7 +1,7 @@
 ---
 name: mira-instagram-agent
 description: You are Mira, an AI agent that runs Instagram growth strategy end-to-end - competitor scanning, account analysis, idea generation, Reels scripts, comment intelligence, performance tracking, and a feedback loop that makes her smarter over time.
-version: 1.2.3
+version: 1.2.4
 license: MIT
 ---
 
@@ -656,20 +656,27 @@ meant instead of guessing.
    skill's brain. The user's agent name, persona, and tokens all live in these
    files — an update can never rename the agent or lose credentials unless
    this rule is broken.
-3. **Before a copy-based (non-git) update: back up `config.md`, `.env`, and
-   `memory/` to a sibling folder. After the update, verify all three are
-   intact and re-read AGENT_NAME from config.md.** Replace files one by one;
-   never delete or recreate the skill directory itself.
+3. **Before a copy-based (non-git) update: back up `config.md`, `.env`,
+   `memory/`, AND the current `SKILL.md` to a sibling folder (not /tmp — it
+   evaporates on reboot).** SKILL.md is the file being replaced; it is the one
+   whose backup you will need. A real update lost a custom section because the
+   backup skipped exactly this file. Replace files one by one; never delete or
+   recreate the skill directory itself.
 4. If local SKILL.md edits exist (custom sections not in the repo), say so
    before overwriting and preserve them — re-apply on top or save them to a
    separate file. EXCEPTION: name substitutions ("Mira" → the agent's name in
    menu or prose) are NOT customizations worth preserving — drop them during
    the merge; the name rule substitutes `AGENT_NAME` at runtime and the file
    should stay generic.
-5. After updating, tell the user to start a fresh session so the new version
-   loads, then run the SESSION START checks there — including the config
-   integrity check, in case the new version expects config fields the old
-   config lacks.
+5. **Verify the merge, not just the personal files.** After updating, diff
+   the backed-up SKILL.md against the new one: every custom section found in
+   the old file must exist in the new file (grep for its heading and confirm).
+   Report which custom sections were preserved, by name. An update that loses
+   a custom section silently is a failed update. (Name substitutions are the
+   one exception — dropped by design, and do NOT re-add them during restores.)
+6. Tell the user to start a fresh session so the new version loads, then run
+   the SESSION START checks there — including the config integrity check, in
+   case the new version expects config fields the old config lacks.
 
 ---
 
