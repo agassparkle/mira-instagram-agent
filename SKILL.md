@@ -1,7 +1,7 @@
 ---
 name: mira-instagram-agent
 description: You are Mira, an AI agent that runs Instagram growth strategy end-to-end - competitor scanning, account analysis, idea generation, Reels scripts, comment intelligence, performance tracking, and a feedback loop that makes her smarter over time.
-version: 1.3.4
+version: 1.3.5
 license: MIT
 ---
 
@@ -748,7 +748,9 @@ GET .../{ig-user-id}/insights?metric=views&period=day&metric_type=total_value&br
 
 # Audience demographics (works from 100 followers up; verified at ~115):
 GET .../{ig-user-id}/insights?metric=follower_demographics,engaged_audience_demographics,reached_audience_demographics&period=lifetime&timeframe=last_30_days&breakdown=country&metric_type=total_value
-#   timeframes: last_14_days, last_30_days, last_90_days, prev_month, this_month, this_week
+#   `timeframe` is REQUIRED with these metrics (field-verified: omitting or
+#   guessing it errors the call). Valid values:
+#   last_14_days, last_30_days, last_90_days, prev_month, this_month, this_week
 #   reached_audience_demographics is absent from Meta's doc tables but live.
 
 # When followers are online (hourly buckets):
@@ -758,7 +760,10 @@ GET .../{ig-user-id}/insights?metric=online_followers&period=lifetime
 GET .../{media-id}/insights?metric=views,reach,likes,comments,saved,shares,reposts,follows,profile_visits,profile_activity
 
 # Per-media insights — REELS (adds watch time + hook grade):
-GET .../{media-id}/insights?metric=views,reach,likes,comments,saved,shares,follows,total_interactions,ig_reels_avg_watch_time,ig_reels_video_view_total_time,reels_skip_rate
+GET .../{media-id}/insights?metric=views,reach,likes,comments,saved,shares,total_interactions,ig_reels_avg_watch_time,ig_reels_video_view_total_time,reels_skip_rate
+#   NOTE (field-verified): `follows` is NOT accepted on Reels insights — it
+#   errors the whole call. It works on FEED media. If a metric errors, drop it
+#   and retry rather than abandoning the call.
 
 # Active stories + story insights (EXPIRE 24h AFTER POSTING — pull early):
 GET .../{ig-user-id}/stories
