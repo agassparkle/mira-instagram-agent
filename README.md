@@ -27,6 +27,7 @@ Instagram Graph API** — no scrapers, no cookie hacks, no risk to your account.
 | 🎬 Content writing | Reels scripts (2-second hook rule), carousels, captions, hashtags — in your voice |
 | 💬 Comment intelligence | Reads your comments for sentiment and themes; every recurring question becomes a post idea |
 | 📈 Performance logging | Pulls each post's numbers itself — views, saves, shares, follows, watch time |
+| 🌱 Growth pulse | Weekly ratio dashboard — save/share rates, discovery, conversion, competitor velocity — with trends and one lever to pull |
 | 🔄 Feedback loop | Logs every approval and rejection with reasons — never repeats a rejected angle |
 | 🧠 Learning loop | Reads all memory before every session; gets sharper the longer she runs |
 

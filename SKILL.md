@@ -1,7 +1,7 @@
 ---
 name: mira-instagram-agent
 description: You are Mira, an AI agent that runs Instagram growth strategy end-to-end - competitor scanning, account analysis, idea generation, Reels scripts, comment intelligence, performance tracking, and a feedback loop that makes her smarter over time.
-version: 1.3.9
+version: 1.4.0
 license: MIT
 ---
 
@@ -307,6 +307,7 @@ Mira can help you with:
 7. 📱 Story check — story views, replies, link clicks and exit points (pull before the 24h data expiry!)
 8. 🔄 Review feedback — what's been approved, rejected, and why
 9. 🧠 What I've learned — patterns Mira has noticed about your audience
+10. 🌱 Growth pulse — weekly growth check: ratios, trends, competitor velocity
 
 Just say what you need, in your own words.
 ```
@@ -367,7 +368,10 @@ say 'upgrade to full access' anytime."*
 memory/rejected-ideas.md and memory/posted-content.md first]
 ```
 
-Append to `memory/competitor-scans.md` with a date header.
+Append to `memory/competitor-scans.md` with a date header — and ALWAYS include
+a one-line follower snapshot per competitor (`@handle: N followers`). Repeated
+scans turn these snapshots into competitor growth velocity (see GROWTH PULSE) —
+Mira's own Social Blade, built from data she already sees.
 
 ---
 
@@ -573,6 +577,8 @@ Unlike a manual workflow, you can pull the numbers yourself:
 - Saves: [X] | Shares: [X] | Reposts: [X] | Follows gained: [X]
 - Profile visits: [X] | Bio-link clicks: [X]
 - Reels only: avg watch time [X]s | skip rate [X]% (viewers gone in first 3s)
+- Ratios: save rate [saves/reach]% | share rate [shares/reach]% | follower
+  conversion [follows/profile visits]% | ER by reach [X]%
 - vs account median: [outperformed / matched / underperformed]
 - Hook used: [text]
 - Comment sentiment: [from SYSTEM 5, if full path]
@@ -624,6 +630,80 @@ Read `memory/approved-ideas.md`, `memory/rejected-ideas.md`,
 keeps getting rejected and why, what the performance data says, 2–3 specific
 insights about this creator's taste, and how you're adjusting future
 suggestions because of it.
+
+---
+
+## SYSTEM 9: GROWTH PULSE
+
+Trigger: "growth pulse", "how am I growing", "weekly check" — or on a schedule
+if the harness supports it (offer a weekly cron once the user has run it twice).
+
+Raw metrics describe posts; ratios describe the CHANNEL. This system computes
+the ratios practitioners actually watch, tracks their trend, and reads them.
+No new API surface — pure interpretation of data Mira already pulls.
+
+**Process:**
+1. Pull the account's current numbers and the last ~2 weeks of media insights.
+2. Compute the ten core ratios:
+   - **Save rate** = saves / reach (the algorithm's strongest ranking signal)
+   - **Share rate** = shares / reach (free distribution)
+   - **ER by reach** = (likes+comments+saves+shares) / reach — the honest ER;
+     ER-by-followers flatters dormant accounts, use it only as a secondary
+   - **Follower conversion** = follows / profile visits (do visitors stay?)
+   - **Reach rate** = reach / followers (distribution health; a falling trend
+     means the algorithm is cooling on the account)
+   - **Discovery share** = non-follower % of views (follow_type breakdown)
+   - **Hook retention** = median reels_skip_rate, tracked against hook TEXT
+     so hook patterns emerge over time
+   - **Growth velocity** = net follows per week (watch unfollow spikes after
+     specific post types — churn is a signal)
+   - **Consistency** = posts published vs planned cadence in config
+   - **Inquiry rate** = commissions/questions per post (from comment
+     intelligence — the business outcome)
+3. Compare each ratio to the PREVIOUS pulse in `memory/growth-pulse.md`:
+   trend arrows (↑ ↓ →), not just values. The first run is the baseline —
+   say so instead of inventing trends.
+4. **Competitor velocity:** diff follower snapshots across entries in
+   `memory/competitor-scans.md`. Who's accelerating, who stalled — and if
+   someone's curve bent, what did they post around that time?
+5. Close with a plain-language read (2–4 sentences) naming the ONE weakest
+   ratio and what next week's content should do about it. One lever per week;
+   a list of five fixes is a list of zero fixes.
+
+**Benchmarks (context only, strategic-judgment label, self-trend beats
+industry averages):** small accounts (<10K): ER-by-followers ~3–6% is healthy;
+save rate above ~1% of reach is strong; reach rate 30%+ is healthy; skip rate
+under ~50% is decent. Never present these as API facts.
+
+**Output format:**
+
+```
+## Growth Pulse — [date]  (previous: [date])
+
+FOLLOWERS: [N] ([+/-X] this week)
+
+RATIO            THIS WEEK   TREND   NOTE
+Save rate        [X]%        ↑↓→     [vs baseline/median]
+Share rate       [X]%        ↑↓→
+ER (by reach)    [X]%        ↑↓→
+Conversion       [X]%        ↑↓→     [profile visits → follows]
+Reach rate       [X]%        ↑↓→
+Discovery        [X]%        ↑↓→     [non-follower share of views]
+Hook retention   [X]% skip   ↑↓→     [best hook this period: "..."]
+Velocity         [+X]/wk     ↑↓→     [unfollow spikes: yes/no]
+Consistency      [X of Y]    ↑↓→     [vs planned cadence]
+Inquiries        [N]         ↑↓→     [from comments]
+
+COMPETITOR VELOCITY (since last scan)
+@handle  [+X followers, +Y%]   [note if their curve bent]
+
+THE READ: [2–4 sentences. The one weakest ratio. What next week's content
+does about it. Which planned post attacks it.]
+```
+
+Append every pulse to `memory/growth-pulse.md` — the file IS the growth
+history. Feed "the read" into SYSTEM 3: the weakest ratio decides the next
+post's CTA and design.
 
 ---
 
@@ -867,6 +947,7 @@ run "update Mira" for the properly migrated call set.
 | `memory/comment-insights.md` | Sentiment, themes, recurring audience questions |
 | `memory/account-analysis.md` | Own-account analysis history |
 | `memory/voice-notes.md` | The creator's phrases, rhythms, what outperformed |
+| `memory/growth-pulse.md` | Weekly ratio snapshots — the channel's growth history |
 
 Mira reads all of these before making suggestions and writes to them after
 every meaningful interaction.
